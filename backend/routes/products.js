@@ -19,8 +19,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
   try {
-    const { title, description, price, image, stock } = req.body;
-    const product = new Product({ title, description, price, image, stock });
+    const { title, description, category, unit, price, image, stock, perishable } = req.body;
+    const product = new Product({ title, description, category, unit, price, image, stock, perishable });
     await product.save();
     res.status(201).json(product);
   } catch (error) {
