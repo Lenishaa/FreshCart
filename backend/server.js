@@ -57,7 +57,17 @@ async function createDefaultAdmin() {
     const adminEmail = process.env.ADMIN_EMAIL || 'admin@example.com';
     const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
     const existing = await User.findOne({ email: adminEmail });
-    if (!existing) {
+    
+    if (existing) {
+      // Update existing admin password to match .env
+      // Mark password as modified to trigger the pre-save hook
+      existing.password = adminPassword;
+      existing.markModified('password');
+      existing.role = 'admin';
+      await existing.save();
+      console.log('✓ Admin credentials updated:', adminEmail);
+    } else {
+      // Create new admin user
       const admin = new User({
         name: 'Administrator',
         email: adminEmail,
@@ -68,7 +78,7 @@ async function createDefaultAdmin() {
       console.log('✓ Default admin user created:', adminEmail);
     }
   } catch (error) {
-    console.error('Could not create default admin:', error.message);
+    console.error('Could not create/update default admin:', error.message);
   }
 }
 

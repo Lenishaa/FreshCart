@@ -11,11 +11,6 @@ function LoginPage({ onSubmit }) {
     onSubmit(form);
   };
 
-  const handleAdminLogin = () => {
-    setForm({ email: 'admin@example.com', password: 'admin123' });
-    onSubmit({ email: 'admin@example.com', password: 'admin123' });
-  };
-
   return (
     <div className="auth-page">
       <div className="auth-container">
@@ -44,16 +39,67 @@ function LoginPage({ onSubmit }) {
           </div>
 
           {activeTab === 'user' ? (
+            <form onSubmit={handleSubmit} className="auth-form">
+              <div className="form-group">
+                <label htmlFor="email">Email Address</label>
+                <div className="input-wrapper">
+                  <span className="input-icon">📧</span>
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder="you@example.com"
+                    value={form.email}
+                    onChange={e => setForm({ ...form, email: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <div className="input-wrapper">
+                  <span className="input-icon">🔒</span>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    placeholder="Enter your password"
+                    value={form.password}
+                    onChange={e => setForm({ ...form, password: e.target.value })}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="toggle-password"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? '👁️' : '👁️‍🗨️'}
+                  </button>
+                </div>
+              </div>
+
+              <button type="submit" className="btn btn-primary btn-full">
+                Sign In
+              </button>
+            </form>
+          ) : (
             <>
               <form onSubmit={handleSubmit} className="auth-form">
+                <div className="admin-badge">
+                  <span className="admin-icon">🔐</span>
+                  <div className="admin-info-text">
+                    <h3>Administrator Access</h3>
+                    <p>Enter your admin credentials below</p>
+                  </div>
+                </div>
+
                 <div className="form-group">
-                  <label htmlFor="email">Email Address</label>
+                  <label htmlFor="admin-email">Admin Email</label>
                   <div className="input-wrapper">
                     <span className="input-icon">📧</span>
                     <input
                       type="email"
-                      id="email"
-                      placeholder="you@example.com"
+                      id="admin-email"
+                      placeholder="admin@example.com"
                       value={form.email}
                       onChange={e => setForm({ ...form, email: e.target.value })}
                       required
@@ -62,13 +108,13 @@ function LoginPage({ onSubmit }) {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="password">Password</label>
+                  <label htmlFor="admin-password">Admin Password</label>
                   <div className="input-wrapper">
                     <span className="input-icon">🔒</span>
                     <input
                       type={showPassword ? 'text' : 'password'}
-                      id="password"
-                      placeholder="Enter your password"
+                      id="admin-password"
+                      placeholder="Enter admin password"
                       value={form.password}
                       onChange={e => setForm({ ...form, password: e.target.value })}
                       required
@@ -83,29 +129,14 @@ function LoginPage({ onSubmit }) {
                   </div>
                 </div>
 
-                <button type="submit" className="btn btn-primary btn-full">
-                  Sign In
+                <button type="submit" className="btn btn-admin btn-full">
+                  ⚙️ Admin Sign In
                 </button>
               </form>
 
-              <div className="auth-footer">
-                <p>
-                  Don't have an account? <Link to="/register" className="link-primary">Create one</Link>
-                </p>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="admin-login-info">
-                <div className="admin-badge">
-                  <span className="admin-icon">🔐</span>
-                  <div className="admin-info-text">
-                    <h3>Administrator Access</h3>
-                    <p>Use the following credentials to access the admin dashboard</p>
-                  </div>
-                </div>
-
-                <div className="admin-credentials-box">
+              <div className="admin-credentials-reference">
+                <p className="reference-title">📋 Demo Credentials (for testing):</p>
+                <div className="credentials-list">
                   <div className="credential-item">
                     <span className="credential-label">Email:</span>
                     <code className="credential-value">admin@example.com</code>
@@ -115,20 +146,16 @@ function LoginPage({ onSubmit }) {
                     <code className="credential-value">admin123</code>
                   </div>
                 </div>
-
-                <button 
-                  type="button" 
-                  className="btn btn-admin btn-full"
-                  onClick={handleAdminLogin}
-                >
-                  🔑 Login as Admin
-                </button>
-
-                <div className="admin-notice">
-                  <p>⚠️ This area is restricted to authorized administrators only.</p>
-                </div>
               </div>
             </>
+          )}
+
+          {activeTab === 'user' && (
+            <div className="auth-footer">
+              <p>
+                Don't have an account? <Link to="/register" className="link-primary">Create one</Link>
+              </p>
+            </div>
           )}
         </div>
       </div>
