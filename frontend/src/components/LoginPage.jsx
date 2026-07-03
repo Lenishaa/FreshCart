@@ -135,7 +135,7 @@ function LoginPage({ onSubmit }) {
               </form>
 
               <div className="admin-credentials-reference">
-                <p className="reference-title">📋 Demo Credentials (for testing):</p>
+                <p className="reference-title">📋 Demo Credentials:</p>
                 <div className="credentials-list">
                   <div className="credential-item">
                     <span className="credential-label">Email:</span>

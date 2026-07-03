@@ -226,10 +226,25 @@ API base URL in `src/App.jsx`:
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api'
 ```
 
-For production, create a `.env` file in the frontend directory:
+**For Local Development:**
+Create a `.env` file in the frontend directory (already created):
+```env
+VITE_API_BASE=http://localhost:5000/api
+```
+
+**For Production Deployment:**
+Update the `frontend/.env` file with your backend URL:
 ```env
 VITE_API_BASE=https://your-backend-url.com/api
 ```
+
+Then rebuild the frontend:
+```bash
+cd frontend
+npm run build
+```
+
+**Important:** After changing `VITE_API_BASE`, you must restart the frontend dev server or rebuild for production.
 
 ## 📚 User Workflows
 
