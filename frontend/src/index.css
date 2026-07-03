@@ -1598,6 +1598,122 @@ body {
   color: #065f46;
 }
 
+/* ===== Admin Orders Sections ===== */
+.orders-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.orders-section {
+  background: white;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+}
+
+.section-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 2px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-header.pending {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-bottom-color: #f59e0b;
+}
+
+.section-header.pending h2 {
+  color: #92400e;
+}
+
+.section-header.confirmed {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border-bottom-color: #3b82f6;
+}
+
+.section-header.confirmed h2 {
+  color: #1e40af;
+}
+
+.section-header.shipped {
+  background: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%);
+  border-bottom-color: #a855f7;
+}
+
+.section-header.shipped h2 {
+  color: #6b21a8;
+}
+
+.section-header.delivered {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-bottom-color: #10b981;
+}
+
+.section-header.delivered h2 {
+  color: #065f46;
+}
+
+.section-orders {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.no-orders-in-section {
+  text-align: center;
+  padding: 2rem;
+  color: var(--gray-500);
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.order-date {
+  color: var(--gray-500);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.item-name {
+  flex: 1;
+  color: var(--gray-700);
+}
+
+.item-quantity {
+  color: var(--gray-600);
+  font-weight: 500;
+  margin: 0 0.75rem;
+}
+
+.item-price {
+  color: var(--gray-900);
+  font-weight: 600;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: var(--gray-50);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  border-left: 3px solid var(--primary);
+  gap: 1rem;
+}
+
 /* ===== User Orders Page ===== */
 .user-orders-page {
   max-width: 1000px;

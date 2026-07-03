@@ -575,6 +575,70 @@ function AdminOrders({ onLogout }) {
     }
   };
 
+  // Group orders by status
+  const pendingOrders = orders.filter(order => order.status === 'pending');
+  const confirmedOrders = orders.filter(order => order.status === 'confirmed');
+  const shippedOrders = orders.filter(order => order.status === 'shipped');
+  const deliveredOrders = orders.filter(order => order.status === 'delivered');
+
+  const OrderCard = ({ order }) => (
+    <div key={order._id} className="order-card">
+      <div className="order-header">
+        <div className="order-header-content">
+          <h3>Order #{order._id.slice(-6).toUpperCase()}</h3>
+          <div className="order-customer">
+            Customer: {order.user?.name || 'Unknown'} | {order.user?.email}
+          </div>
+          <div className="order-date">
+            {new Date(order.createdAt).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            })}
+          </div>
+        </div>
+      </div>
+
+      <div className="order-body">
+        <div className="order-items-section">
+          <h4>Order Items:</h4>
+          <div className="order-items">
+            {order.items?.map((item, idx) => (
+              <div key={idx} className="order-item">
+                <span className="item-name">{item.product?.title || 'Product'}</span>
+                <span className="item-quantity">x{item.quantity}</span>
+                <span className="item-price">₹{(item.quantity * item.price).toFixed(2)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="order-total-section">
+          <span>Total Amount:</span>
+          <strong>₹{order.total.toFixed(2)}</strong>
+        </div>
+
+        <div className="order-footer">
+          <div className="order-status-section">
+            <label>Update Status:</label>
+            <select
+              value={order.status}
+              onChange={e => updateStatus(order._id, e.target.value)}
+              className={`status-select status-${order.status}`}
+            >
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="admin-orders">
       <div className="admin-header">
@@ -586,54 +650,63 @@ function AdminOrders({ onLogout }) {
       </div>
 
       {orders.length === 0 && <p className="no-orders">No orders yet.</p>}
-      <div className="orders-list">
-        {orders.map(order => (
-          <div key={order._id} className="order-card">
-            <div className="order-header">
-              <div className="order-header-content">
-                <h3>Order #{order._id.slice(-6).toUpperCase()}</h3>
-                <div className="order-customer">
-                  Customer: {order.user?.name || 'Unknown'} | {order.user?.email}
-                </div>
-              </div>
-            </div>
 
-            <div className="order-body">
-              <div className="order-items-section">
-                <h4>Order Items:</h4>
-                <div className="order-items">
-                  {order.items?.map((item, idx) => (
-                    <div key={idx} className="order-item">
-                      <span>{item.product?.title} x{item.quantity}</span>
-                      <strong>₹{(item.quantity * item.price).toFixed(2)}</strong>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="order-total-section">
-                <span>Total Amount:</span>
-                <strong>₹{order.total.toFixed(2)}</strong>
-              </div>
-
-              <div className="order-footer">
-                <div className="order-status-section">
-                  <label>Update Status:</label>
-                  <select
-                    value={order.status}
-                    onChange={e => updateStatus(order._id, e.target.value)}
-                    className={`status-select status-${order.status}`}
-                  >
-                    <option value="pending">Pending</option>
-                    <option value="confirmed">Confirmed</option>
-                    <option value="shipped">Shipped</option>
-                    <option value="delivered">Delivered</option>
-                  </select>
-                </div>
-              </div>
-            </div>
+      <div className="orders-sections">
+        {/* Pending Orders */}
+        <div className="orders-section">
+          <div className="section-header pending">
+            <h2>⏳ Pending Orders ({pendingOrders.length})</h2>
           </div>
-        ))}
+          <div className="section-orders">
+            {pendingOrders.length === 0 ? (
+              <p className="no-orders-in-section">No pending orders</p>
+            ) : (
+              pendingOrders.map(order => <OrderCard key={order._id} order={order} />)
+            )}
+          </div>
+        </div>
+
+        {/* Confirmed Orders */}
+        <div className="orders-section">
+          <div className="section-header confirmed">
+            <h2>✅ Confirmed Orders ({confirmedOrders.length})</h2>
+          </div>
+          <div className="section-orders">
+            {confirmedOrders.length === 0 ? (
+              <p className="no-orders-in-section">No confirmed orders</p>
+            ) : (
+              confirmedOrders.map(order => <OrderCard key={order._id} order={order} />)
+            )}
+          </div>
+        </div>
+
+        {/* Shipped Orders */}
+        <div className="orders-section">
+          <div className="section-header shipped">
+            <h2>🚚 Shipped Orders ({shippedOrders.length})</h2>
+          </div>
+          <div className="section-orders">
+            {shippedOrders.length === 0 ? (
+              <p className="no-orders-in-section">No shipped orders</p>
+            ) : (
+              shippedOrders.map(order => <OrderCard key={order._id} order={order} />)
+            )}
+          </div>
+        </div>
+
+        {/* Delivered Orders */}
+        <div className="orders-section">
+          <div className="section-header delivered">
+            <h2>📦 Delivered Orders ({deliveredOrders.length})</h2>
+          </div>
+          <div className="section-orders">
+            {deliveredOrders.length === 0 ? (
+              <p className="no-orders-in-section">No delivered orders</p>
+            ) : (
+              deliveredOrders.map(order => <OrderCard key={order._id} order={order} />)
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
