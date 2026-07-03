@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import LandingPage from './components/LandingPage';
 import LoginPage from './components/LoginPage';
@@ -183,12 +183,12 @@ function App() {
       )}
 
       <main>
-        <Routes>
+      <Routes>
           <Route path="/" element={
             user ? (
               <ProductList products={products} addToCart={addToCart} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} search={search} setSearch={setSearch} categories={categories} onSearch={fetchProducts} />
             ) : (
-              <LandingPage user={user} />
+              <Navigate to="/login" replace />
             )
           } />
           <Route path="/login" element={<LoginPage onSubmit={handleLogin} />} />
