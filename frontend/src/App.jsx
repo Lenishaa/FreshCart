@@ -102,6 +102,10 @@ function App() {
       setUser(res.data.user);
       localStorage.setItem('ecom_user', JSON.stringify(res.data.user));
       localStorage.setItem('ecom_token', res.data.token);
+      // Reset filters when logging in
+      setSelectedCategory('All');
+      setSearch('');
+      fetchProducts();
       navigate(res.data.user.role === 'admin' ? '/admin' : '/');
     } catch (error) {
       alert(error.response?.data?.message || 'Login failed: ' + error.message);
@@ -141,6 +145,8 @@ function App() {
   const handleLogout = () => {
     setUser(null);
     setCart([]);
+    setSelectedCategory('All');
+    setSearch('');
     localStorage.removeItem('ecom_user');
     localStorage.removeItem('ecom_token');
     navigate('/');
