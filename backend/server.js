@@ -11,7 +11,14 @@ const Product = require('./models/Product');
 dotenv.config();
 
 const app = express();
-app.use(cors());
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['https://fresh-cart-six-omega.vercel.app', 'https://freshcart-emos.onrender.com']
+    : ['http://localhost:5173', 'http://localhost:3000'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/e_com';
