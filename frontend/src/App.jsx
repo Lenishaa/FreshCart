@@ -188,7 +188,7 @@ function App() {
             user ? (
               <ProductList products={products} addToCart={addToCart} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} search={search} setSearch={setSearch} categories={categories} onSearch={fetchProducts} />
             ) : (
-              <Navigate to="/login" replace />
+              <LandingPage user={user} />
             )
           } />
           <Route path="/login" element={<LoginPage onSubmit={handleLogin} />} />
