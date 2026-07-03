@@ -11,6 +11,13 @@ function LoginPage({ onSubmit }) {
     onSubmit(form);
   };
 
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    // Clear form and reset password visibility when switching tabs
+    setForm({ email: '', password: '' });
+    setShowPassword(false);
+  };
+
   return (
     <div className="auth-page">
       <div className="auth-container">
