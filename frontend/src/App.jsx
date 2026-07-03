@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LandingPage from './components/LandingPage';
 import LoginPage from './components/LoginPage';
@@ -18,10 +18,6 @@ function App() {
 
   useEffect(() => {
     fetchProducts();
-    const session = localStorage.getItem('ecom_user');
-    if (session) {
-      setUser(JSON.parse(session));
-    }
   }, []);
 
   useEffect(() => {
