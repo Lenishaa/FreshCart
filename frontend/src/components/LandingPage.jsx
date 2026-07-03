@@ -95,7 +95,7 @@ function LandingPage({ user, onLogout }) {
 
       {/* Footer */}
       <footer className="footer">
-        <p>© 2024 FreshCart. All rights reserved.</p>
+        <p>© 2026 FreshCart. All rights reserved.</p>
       </footer>
     </div>
   );
